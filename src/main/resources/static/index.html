@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krushi Mitra - Smart Agriculture Support Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-seedling"></i>
+                <span>Krushi Mitra</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#weather" class="nav-link">Weather</a>
+                <a href="#crops" class="nav-link">Crops</a>
+                <a href="#market" class="nav-link">Market Prices</a>
+                <a href="#schemes" class="nav-link">Schemes</a>
+                <a href="#qa" class="nav-link">Q&A Forum</a>
+                <a href="#products" class="nav-link">Products</a>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" onclick="showLoginModal()">Login</button>
+                    <button class="btn btn-primary" onclick="showRegisterModal()">Register</button>
+                </div>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Empowering Indian Farmers</h1>
+                <p class="hero-subtitle">Get crop recommendations, expert advice, market prices, and government schemes all in one place.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary btn-large" onclick="scrollToSection('weather')">Check Weather</button>
+                    <button class="btn btn-outline btn-large" onclick="scrollToSection('crops')">Explore Crops</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="images/farmer-hero.jpg" alt="Indian Farmer" onerror="this.style.display='none'">
+            </div>
+        </div>
+    </section>
+
+    <!-- Weather Section -->
+    <section id="weather" class="section">
+        <div class="container">
+            <h2 class="section-title">Weather Information</h2>
+            <div class="weather-container">
+                <div class="weather-search">
+                    <input type="text" id="city-input" placeholder="Enter city name..." class="input-field">
+                    <button onclick="getWeather()" class="btn btn-primary">Get Weather</button>
+                </div>
+                <div id="weather-result" class="weather-result"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crops Section -->
+    <section id="crops" class="section">
+        <div class="container">
+            <h2 class="section-title">Crop Recommendations</h2>
+            <div class="crop-recommendation">
+                <div class="form-group">
+                    <label for="season-select">Season:</label>
+                    <select id="season-select" class="input-field">
+                        <option value="">Select Season</option>
+                        <option value="Kharif">Kharif</option>
+                        <option value="Rabi">Rabi</option>
+                        <option value="Zaid">Zaid</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="soil-select">Soil Type:</label>
+                    <select id="soil-select" class="input-field">
+                        <option value="">Select Soil Type</option>
+                        <option value="Clay">Clay</option>
+                        <option value="Sandy">Sandy</option>
+                        <option value="Loamy">Loamy</option>
+                        <option value="Red">Red</option>
+                        <option value="Black">Black</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="climate-select">Climate:</label>
+                    <select id="climate-select" class="input-field">
+                        <option value="">Select Climate</option>
+                        <option value="Tropical">Tropical</option>
+                        <option value="Subtropical">Subtropical</option>
+                        <option value="Temperate">Temperate</option>
+                    </select>
+                </div>
+                <button onclick="getCropRecommendations()" class="btn btn-primary">Get Recommendations</button>
+            </div>
+            <div id="crop-results" class="crop-results"></div>
+        </div>
+    </section>
+
+    <!-- Market Prices Section -->
+    <section id="market" class="section">
+        <div class="container">
+            <h2 class="section-title">Market Prices</h2>
+            <div class="market-container">
+                <div class="market-search">
+                    <input type="text" id="commodity-input" placeholder="Search commodity..." class="input-field">
+                    <button onclick="searchMarketPrices()" class="btn btn-primary">Search</button>
+                </div>
+                <div id="market-results" class="market-results"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Government Schemes Section -->
+    <section id="schemes" class="section">
+        <div class="container">
+            <h2 class="section-title">Government Schemes</h2>
+            <div id="schemes-list" class="schemes-list"></div>
+        </div>
+    </section>
+
+    <!-- Q&A Forum Section -->
+    <section id="qa" class="section">
+        <div class="container">
+            <h2 class="section-title">Q&A Forum</h2>
+            <div id="qa-container" class="qa-container">
+                <div class="qa-login-prompt">
+                    <p>Please login to access the Q&A forum and ask questions to experts.</p>
+                    <button onclick="showLoginModal()" class="btn btn-primary">Login</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Listings Section -->
+    <section id="products" class="section">
+        <div class="container">
+            <h2 class="section-title">Product Listings</h2>
+            <div id="products-list" class="products-list"></div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('login-modal')">&times;</span>
+            <h2>Login</h2>
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="login-username">Username:</label>
+                    <input type="text" id="login-username" required class="input-field">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" required class="input-field">
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('register-modal')">&times;</span>
+            <h2>Register</h2>
+            <form id="register-form" class="auth-form">
+                <div class="form-group">
+                    <label for="register-role">Role:</label>
+                    <select id="register-role" required class="input-field" onchange="toggleRoleFields()">
+                        <option value="">Select Role</option>
+                        <option value="FARMER">Farmer</option>
+                        <option value="EXPERT">Expert</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="register-username">Username:</label>
+                    <input type="text" id="register-username" required class="input-field">
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email:</label>
+                    <input type="email" id="register-email" required class="input-field">
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password:</label>
+                    <input type="password" id="register-password" required class="input-field">
+                </div>
+                <div class="form-group">
+                    <label for="register-firstname">First Name:</label>
+                    <input type="text" id="register-firstname" required class="input-field">
+                </div>
+                <div class="form-group">
+                    <label for="register-lastname">Last Name:</label>
+                    <input type="text" id="register-lastname" required class="input-field">
+                </div>
+                <div class="form-group">
+                    <label for="register-phone">Phone Number:</label>
+                    <input type="tel" id="register-phone" class="input-field">
+                </div>
+                
+                <!-- Expert-specific fields -->
+                <div id="expert-fields" class="role-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="register-expertise">Expertise:</label>
+                        <input type="text" id="register-expertise" class="input-field">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-qualifications">Qualifications:</label>
+                        <textarea id="register-qualifications" class="input-field"></textarea>
+                    </div>
+                </div>
+                
+                <!-- Farmer-specific fields -->
+                <div id="farmer-fields" class="role-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="register-farmsize">Farm Size:</label>
+                        <input type="text" id="register-farmsize" class="input-field">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-primarycrops">Primary Crops:</label>
+                        <input type="text" id="register-primarycrops" class="input-field">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Krushi Mitra</h3>
+                    <p>Empowering Indian farmers with smart agriculture solutions.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#weather">Weather</a></li>
+                        <li><a href="#crops">Crops</a></li>
+                        <li><a href="#market">Market Prices</a></li>
+                        <li><a href="#schemes">Schemes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: info@krushimitra.com</p>
+                    <p>Phone: +91 1234567890</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Krushi Mitra. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
