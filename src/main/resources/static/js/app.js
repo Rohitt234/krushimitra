@@ -2,8 +2,8 @@
 let currentUser = null;
 let authToken = localStorage.getItem('authToken');
 
-// API Base URL
-const API_BASE_URL = 'http://localhost:8080/api';
+// API Base URL - dynamically determine based on current location
+const API_BASE_URL = window.location.origin + '/api';
 
 // DOM Content Loaded
 document.addEventListener('DOMContentLoaded', function() {
